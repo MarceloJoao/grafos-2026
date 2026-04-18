@@ -50,6 +50,7 @@ func main() {
 
 		if nome == "GRAFO_1" || nome == "GRAFO_3" {
 			r.Adiciona("BFS", algoritmos.FormataBFS(g, g.Vertices[0]))
+			r.Adiciona("DFS", algoritmos.FormataDFS(g, g.Vertices[0]))
 		}
 
 		// -------------------------------------------------------
