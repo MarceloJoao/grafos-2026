@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/PauloFH/grafos-2026/internal/algoritmos"
 	"github.com/PauloFH/grafos-2026/internal/conversoes"
 	"github.com/PauloFH/grafos-2026/internal/leitor"
 	"github.com/PauloFH/grafos-2026/internal/relatorio"
@@ -34,7 +35,7 @@ func main() {
 			tipo = "DIGRAFO"
 		}
 		fmt.Printf("[%s] %s - %d vertices, %d arestas\n",
-			tipo, nome, g.NumVertices(), g.NumArestas())
+			tipo, nome, algoritmos.TotalVertices(g), algoritmos.TotalArestas(g))
 
 		r := relatorio.Novo(nome)
 
@@ -46,6 +47,10 @@ func main() {
 		conversoes.MatrizParaLista(g, m)
 		r.Adiciona("LISTA_RECONVERTIDA_DA_MATRIZ", relatorio.FormataLista(g))
 		r.Adiciona("SAO_ADJACENTES", relatorio.FormataAdjacentes(g))
+		r.Adiciona("CONEXO", relatorio.FormataConexo(g))
+		r.Adiciona("CONTAGEM", relatorio.FormataContagem(g))
+		mi, arestas := conversoes.MatrizIncidencia(g)
+		r.Adiciona("MATRIZ_DE_INCIDENCIA", relatorio.FormataMatrizIncidencia(g, mi, arestas))
 
 		// -------------------------------------------------------
 		// Veja o README para saber como fazer a adição de seções.
