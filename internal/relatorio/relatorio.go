@@ -145,3 +145,43 @@ func FormataAdjacentes(g *grafo.Grafo) string {
 	}
 	return sb.String()
 }
+
+// FormataConexo indica se o grafo é conexo
+func FormataConexo(g *grafo.Grafo) string {
+	if algoritmos.EhConexo(g) {
+		return "  O grafo e conexo.\n"
+	}
+	return "  O grafo NAO e conexo.\n"
+}
+
+// FormataContagem exibe total de vértices e arestas
+func FormataContagem(g *grafo.Grafo) string {
+	return fmt.Sprintf("  Total de vertices: %d\n  Total de arestas: %d\n",
+		algoritmos.TotalVertices(g), algoritmos.TotalArestas(g))
+}
+
+// FormataMatrizIncidencia exibe a matriz de incidência com rótulos de colunas
+func FormataMatrizIncidencia(g *grafo.Grafo, m [][]int, arestas [][2]string) string {
+	if len(arestas) == 0 {
+		return "  (sem arestas)\n"
+	}
+	var sb strings.Builder
+
+	// Cabeçalho de colunas (arestas)
+	fmt.Fprintf(&sb, "%5s", "")
+	for _, a := range arestas {
+		col := a[0] + a[1]
+		fmt.Fprintf(&sb, "%6s", col)
+	}
+	sb.WriteByte('\n')
+
+	// Linhas (vértices)
+	for i, v := range g.Vertices {
+		fmt.Fprintf(&sb, "%4s ", v)
+		for _, val := range m[i] {
+			fmt.Fprintf(&sb, "%6d", val)
+		}
+		sb.WriteByte('\n')
+	}
+	return sb.String()
+}

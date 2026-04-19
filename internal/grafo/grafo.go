@@ -40,7 +40,6 @@ func (g *Grafo) AdicionarVertice(id string) {
 }
 
 // RemoverVertice exclui um vértice e suas conexões
-// Item 10 - Responsável: João Marcelo
 func (g *Grafo) RemoverVertice(id string) {
 	// Remove das listas dos outros vértices
 	for v, vizinhos := range g.ListaAdj {

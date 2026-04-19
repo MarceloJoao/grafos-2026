@@ -46,6 +46,10 @@ func main() {
 		conversoes.MatrizParaLista(g, m)
 		r.Adiciona("LISTA_RECONVERTIDA_DA_MATRIZ", relatorio.FormataLista(g))
 		r.Adiciona("SAO_ADJACENTES", relatorio.FormataAdjacentes(g))
+		r.Adiciona("CONEXO", relatorio.FormataConexo(g))
+		r.Adiciona("CONTAGEM", relatorio.FormataContagem(g))
+		mi, arestas := conversoes.MatrizIncidencia(g)
+		r.Adiciona("MATRIZ_DE_INCIDENCIA", relatorio.FormataMatrizIncidencia(g, mi, arestas))
 
 		// -------------------------------------------------------
 		// Veja o README para saber como fazer a adição de seções.
