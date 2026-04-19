@@ -145,3 +145,15 @@ func FormataAdjacentes(g *grafo.Grafo) string {
 	}
 	return sb.String()
 }
+
+// FormataGraus gera o texto com o grau de cada vértice
+func FormataGraus(g *grafo.Grafo) string {
+	var sb strings.Builder
+	graus := g.GrausVertices()
+
+	for _, v := range g.Vertices {
+		fmt.Fprintf(&sb, "  %s: %d\n", v, graus[v])
+	}
+
+	return sb.String()
+}
