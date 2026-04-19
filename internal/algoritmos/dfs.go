@@ -48,8 +48,7 @@ func DFS(g *grafo.Grafo, inicio string) ResultadoDFS {
 	}
 }
 
-func FormataDFS(g *grafo.Grafo, inicio string) string {
-	res := DFS(g, inicio)
+func FormataDFS(res ResultadoDFS, inicio string) string {
 	var sb strings.Builder
 
 	sb.WriteString(fmt.Sprintf("Vértice inicial: %s\n", inicio))

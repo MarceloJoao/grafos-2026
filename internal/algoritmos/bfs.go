@@ -44,8 +44,7 @@ func BFS(g *grafo.Grafo, inicio string) ResultadoBFS {
 	}
 }
 
-func FormataBFS(g *grafo.Grafo, inicio string) string {
-	res := BFS(g, inicio)
+func FormataBFS(res ResultadoBFS, inicio string) string {
 	var sb strings.Builder
 
 	sb.WriteString(fmt.Sprintf("Vértice inicial: %s\n", inicio))

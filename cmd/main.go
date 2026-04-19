@@ -49,8 +49,19 @@ func main() {
 		r.Adiciona("SAO_ADJACENTES", relatorio.FormataAdjacentes(g))
 
 		if nome == "GRAFO_1" || nome == "GRAFO_3" {
-			r.Adiciona("BFS", algoritmos.FormataBFS(g, g.Vertices[0]))
-			r.Adiciona("DFS", algoritmos.FormataDFS(g, g.Vertices[0]))
+			inicio := g.Vertices[0]
+
+			resBFS := algoritmos.BFS(g, inicio)
+			r.Adiciona("BFS", algoritmos.FormataBFS(resBFS, inicio))
+			if err := relatorio.GerarPNGBFS(g, resBFS, inicio, nome+"_BFS", saidas); err != nil {
+				fmt.Println("Aviso: erro ao gerar PNG BFS para", nome, ":", err)
+			}
+
+			resDFS := algoritmos.DFS(g, inicio)
+			r.Adiciona("DFS", algoritmos.FormataDFS(resDFS, inicio))
+			if err := relatorio.GerarPNGDFS(g, resDFS, inicio, nome+"_DFS", saidas); err != nil {
+				fmt.Println("Aviso: erro ao gerar PNG DFS para", nome, ":", err)
+			}
 		}
 
 		if nome == "GRAFO_3" {
