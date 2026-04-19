@@ -104,6 +104,8 @@ func FormataArestas(g *grafo.Grafo) string {
 	return fmt.Sprintf("  Total de arestas: %d\n", g.NumArestas())
 }
 
+const errMatrizInvalida = "(matriz com dimensoes invalidas)\n"
+
 // FormataMatriz gera o texto da matriz de adjacência
 func FormataMatriz(g *grafo.Grafo, m [][]int) string {
 	n := len(g.Vertices)
@@ -112,7 +114,7 @@ func FormataMatriz(g *grafo.Grafo, m [][]int) string {
 	}
 	for i := range m {
 		if len(m[i]) != n {
-			return "  (matriz com dimensoes invalidas)\n"
+			return errMatrizInvalida
 		}
 	}
 	var sb strings.Builder
@@ -148,6 +150,12 @@ func FormataAdjacentes(g *grafo.Grafo) string {
 
 // FormataConexo indica se o grafo é conexo
 func FormataConexo(g *grafo.Grafo) string {
+	if g.Direcionado {
+		if algoritmos.EhConexo(g) {
+			return "  O digrafo e fracamente conexo.\n"
+		}
+		return "  O digrafo NAO e fracamente conexo.\n"
+	}
 	if algoritmos.EhConexo(g) {
 		return "  O grafo e conexo.\n"
 	}
@@ -165,21 +173,32 @@ func FormataMatrizIncidencia(g *grafo.Grafo, m [][]int, arestas [][2]string) str
 	if len(arestas) == 0 {
 		return "  (sem arestas)\n"
 	}
+	if len(m) != len(g.Vertices) {
+		return errMatrizInvalida
+	}
+	for i := range m {
+		if len(m[i]) != len(arestas) {
+			return errMatrizInvalida
+		}
+	}
+
+	sep := "-"
+	if g.Direcionado {
+		sep = "->"
+	}
+
 	var sb strings.Builder
 
-	// Cabeçalho de colunas (arestas)
 	fmt.Fprintf(&sb, "%5s", "")
 	for _, a := range arestas {
-		col := a[0] + a[1]
-		fmt.Fprintf(&sb, "%6s", col)
+		fmt.Fprintf(&sb, "%7s", a[0]+sep+a[1])
 	}
 	sb.WriteByte('\n')
 
-	// Linhas (vértices)
 	for i, v := range g.Vertices {
 		fmt.Fprintf(&sb, "%4s ", v)
 		for _, val := range m[i] {
-			fmt.Fprintf(&sb, "%6d", val)
+			fmt.Fprintf(&sb, "%7d", val)
 		}
 		sb.WriteByte('\n')
 	}
